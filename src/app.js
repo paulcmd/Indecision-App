@@ -1,9 +1,25 @@
 class IndecisionApp extends React.Component {
 	constructor(props) {
 		super(props);
+		this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
+		this.handlePick = this.handlePick.bind(this)
 		this.state = {
-			options: ['1','2','3']
-		}
+			options: ['1', '2'],
+		};
+	}
+
+	handleDeleteOptions() {
+		this.setState(() => {
+			return {
+				options: [],
+			};
+		});
+	}
+
+	handlePick() {
+		const randomNum = Math.floor(Math.random() * this.state.options.length); //has to be same length as array
+		const option = this.state.options[randomNum]; // From options array, we are picking a random index of an item equivalent to a random number generated
+		alert(option);
 	}
 	render() {
 		const title = 'Indecision';
@@ -12,8 +28,14 @@ class IndecisionApp extends React.Component {
 		return (
 			<div>
 				<Header title={title} subtitle={subtitle} />
-				<Action />
-				<Options options={this.state.options} />
+				<Action 
+				hasOptions={this.state.options.length > 1}
+				handlePick={this.handlePick}
+				 />
+				<Options
+					options={this.state.options}
+					handleDeleteOptions={this.handleDeleteOptions}
+				/>
 				<AddOption />
 			</div>
 		);
@@ -32,30 +54,27 @@ class Header extends React.Component {
 }
 
 class Action extends React.Component {
-	handlePick() {
-		alert('handlePick');
-	}
 	render() {
 		return (
 			<div>
-				<button onClick={this.handlePick}>What should I do?</button>
+				<button
+					onClick={this.props.handlePick}
+					disabled={!this.props.hasOptions} //true if there are options, so flip it to disable
+				>
+					What should I do?
+				</button>
 			</div>
 		);
 	}
 }
 
 class Options extends React.Component {
-	constructor(props) {
-		super(props);
-		this.handleRemoveAll = this.handleRemoveAll.bind(this); //we are binding this so we dont have to keep binding every time we call handleRemoveAll below in render function
-	}
-	handleRemoveAll() {
-		// alert('removeAll');
-	}
 	render() {
 		return (
 			<div>
-				<button onClick={this.handleRemoveAll}>Remove All</button>
+				<button onClick={this.props.handleDeleteOptions}>
+					Remove All
+				</button>
 				{this.props.options.map((option, index) => (
 					<Option key={index} optionText={option} />
 				))}
@@ -71,18 +90,15 @@ class Option extends React.Component {
 }
 
 class AddOption extends React.Component {
-
-	 handleAddOption(e) {
-		 //functions in components are declared without const and without the arrow
+	handleAddOption(e) {
+		//functions in components are declared without const and without the arrow
 		e.preventDefault();
-	
+
 		const option = e.target.elements.option.value.trim(); //trim spaces before and after text. also doesn't display empty strings
-		if(option){
+		if (option) {
 			alert(option);
 		}
-		
-	
-	};
+	}
 	render() {
 		return (
 			<div>
