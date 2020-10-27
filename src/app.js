@@ -6,21 +6,27 @@ class IndecisionApp extends React.Component {
 		this.handleAddOption = this.handleAddOption.bind(this);
 		this.handleDeleteOption = this.handleDeleteOption.bind(this);
 		this.state = {
-			options: props.options,
+			options: props.options
 		};
 	}
 
 	componentDidMount() {
-		const jsonOptions = localStorage.getItem('jsonOptions');
-		const options = JSON.parse(jsonOptions)
+		try {
+			const jsonOptions = localStorage.getItem('options');
+			const options = JSON.parse(jsonOptions);
 
-		setState(() => ({ options}))    //i.e setting options: options
+			if (options) {
+				this.setState(() => ({ options })); //i.e setting options: options
+			}
+		} catch (err) {
+			//if error, do nothing at all. fall back to default values
+		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if(prevState.options.length !== this.state.options.length){
-			const jsonOptions = JSON.stringify(this.state.options)
-			localStorage.setItem('options', jsonOptions)
+		if (prevState.options.length !== this.state.options.length) {
+			const jsonOptions = JSON.stringify(this.state.options);
+			localStorage.setItem('options', jsonOptions);
 		}
 		//if new options are set in options array, take new items and store in localStorage
 	}
@@ -31,8 +37,10 @@ class IndecisionApp extends React.Component {
 
 	handleDeleteOption(optionToDelete) {
 		this.setState((prevState) => ({
-			options: prevState.options.filter(option => optionToDelete !== option)
-		}))
+			options: prevState.options.filter(
+				(option) => optionToDelete !== option
+			),
+		}));
 		//changed option argument to optionToDelete to differentiate the variables
 	}
 
@@ -108,6 +116,7 @@ const Options = (props) => {
 	return (
 		<div>
 			<button onClick={props.handleDeleteOptions}>Remove All</button>
+			{props.options.length === 0 && <p>Please add an option to get started!</p>}
 
 			{props.options.map((option, index) => (
 				<Option
@@ -123,17 +132,16 @@ const Options = (props) => {
 const Option = (props) => {
 	return (
 		<div>
-		{props.optionText}
-		<button 
-		onClick={(e) => {
-			props.handleDeleteOption(props.optionText)
-		}}
-
-		>
-		Remove
-		</button>
+			{props.optionText}
+			<button
+				onClick={(e) => {
+					props.handleDeleteOption(props.optionText);
+				}}
+			>
+				Remove
+			</button>
 		</div>
-		);
+	);
 };
 
 class AddOption extends React.Component {
@@ -152,10 +160,13 @@ class AddOption extends React.Component {
 		const option = e.target.elements.option.value.trim(); //trim spaces before and after text. also doesn't display empty strings
 		const error = this.props.handleAddOption(option);
 		//we are passing option to the handleAddOption in the parent component(Indecision). The only return expected is the error, else option was concatenated well.
-		e.target.elements.option.value = '';
 
 		this.setState(() => ({ error }));
 		//set the undefined error to error ie error: error
+
+		if (!error) {
+			e.target.elements.option.value = '';
+		}
 	}
 	render() {
 		return (

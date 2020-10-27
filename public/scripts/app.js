@@ -29,12 +29,18 @@ var IndecisionApp = function (_React$Component) {
 	_createClass(IndecisionApp, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			var jsonOptions = localStorage.getItem('jsonOptions');
-			var options = JSON.parse(jsonOptions);
+			try {
+				var jsonOptions = localStorage.getItem('options');
+				var options = JSON.parse(jsonOptions);
 
-			setState(function () {
-				return { options: options };
-			}); //i.e setting options: options
+				if (options) {
+					this.setState(function () {
+						return { options: options };
+					}); //i.e setting options: options
+				}
+			} catch (err) {
+				//if error, do nothing at all. fall back to default values
+			}
 		}
 	}, {
 		key: 'componentDidUpdate',
@@ -165,6 +171,11 @@ var Options = function Options(props) {
 			{ onClick: props.handleDeleteOptions },
 			'Remove All'
 		),
+		props.options.length === 0 && React.createElement(
+			'p',
+			null,
+			'Please add an option to get started!'
+		),
 		props.options.map(function (option, index) {
 			return React.createElement(Option, {
 				key: index,
@@ -186,7 +197,6 @@ var Option = function Option(props) {
 				onClick: function onClick(e) {
 					props.handleDeleteOption(props.optionText);
 				}
-
 			},
 			'Remove'
 		)
@@ -218,12 +228,15 @@ var AddOption = function (_React$Component2) {
 			var option = e.target.elements.option.value.trim(); //trim spaces before and after text. also doesn't display empty strings
 			var error = this.props.handleAddOption(option);
 			//we are passing option to the handleAddOption in the parent component(Indecision). The only return expected is the error, else option was concatenated well.
-			e.target.elements.option.value = '';
 
 			this.setState(function () {
 				return { error: error };
 			});
 			//set the undefined error to error ie error: error
+
+			if (!error) {
+				e.target.elements.option.value = '';
+			}
 		}
 	}, {
 		key: 'render',
