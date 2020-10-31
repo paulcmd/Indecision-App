@@ -31,7 +31,14 @@ class IndecisionApp extends React.Component {
 	handlePick = () => {
 		const randomNum = Math.floor(Math.random() * this.state.options.length); //has to be same length as array
 		const option = this.state.options[randomNum]; // From options array, we are picking a random index of an item equivalent to a random number generated
-		alert(option);
+		console.log(option)
+		this.setState(() => ({
+			selectedOption: option
+		}))
+	}
+
+	handleDeleteModalOption = () => {
+		this.setState(() => ({selectedOption: undefined}))
 	}
 
 	handleAddOption = (option) => {
@@ -87,6 +94,7 @@ class IndecisionApp extends React.Component {
 				<AddOption handleAddOption={this.handleAddOption} />
 				<OptionModal 
 				selectedOption={this.state.selectedOption}
+				handleDeleteModalOption={this.handleDeleteModalOption}
 				/>
 			</div>
 		);
