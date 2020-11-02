@@ -1,0 +1,5 @@
+.container {
+    max-width: 60rem;
+    margin: 0 auto; //0 for top and bottom, auto splits remaining space in 2 for left and right eg. 10 into 5 and 5
+    padding: 0 $m-size;
+}
