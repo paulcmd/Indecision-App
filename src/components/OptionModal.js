@@ -6,7 +6,7 @@ const OptionModal = (props) => (
         isOpen={!!props.selectedOption}
         contentLabel="Selected Option" //accessibility option
         onRequestClose={props.handleDeleteModalOption} //removes modal when press escape or click outside modal
-        closeTimeoutMS={300}
+        closeTimeoutMS={200}
         className="modal"
     >
         <h3 className="modal__title">Selected Option</h3>

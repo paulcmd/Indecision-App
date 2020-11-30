@@ -19,7 +19,7 @@ class IndecisionApp extends React.Component {
     handleDeleteOption = (optionToDelete) => {
         this.setState((prevState) => ({
             options: prevState.options.filter(
-                (option) => optionToDelete !== option
+                (option) => optionToDelete !== option   //if the option is not the same as optionToDelete, store in options
             )
         }))
         //changed option argument to optionToDelete to differentiate the variables
@@ -29,6 +29,7 @@ class IndecisionApp extends React.Component {
         const randomNum = Math.floor(Math.random() * this.state.options.length) //has to be same length as array
         const option = this.state.options[randomNum] // From options array, we are picking a random index of an item equivalent to a random number generated
         console.log(option)
+        
         this.setState(() => ({
             selectedOption: option
         }))
