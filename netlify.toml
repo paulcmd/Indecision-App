@@ -1,7 +1,7 @@
 [build]
   command = "webpack"
-  publish="./build"
-  base = "./src"
+  publish="/build"
+  base = "/src"
 
   [[redirects]]
   from = "/*"
