@@ -14,11 +14,12 @@ This application was created using _ReactJS_, as well as _React Props_, State(JS
 ---
 
 ## Table of Contents:
-* [Installation](#installation)
+* [Setup](#setup)
 * [Usage](#usage)
-* [Demonstration](#demonstration)
 * [License](#license)
 * [Resources](#resources)
+* [Status](#status)
+* [Inspiration](#inspiration)
 * [Future Improvements](#future-improvements)
 
 ---
@@ -42,7 +43,7 @@ $ npm run dev-server
 
 
 ## Usage:
-To use the application, go to __[this link](https://pmw-indecision-app.netlify.app//)__.
+To use the application, go to __[this link](https://pmw-indecision-app.netlify.app/)__.
 
 ![img-1](readme-imgs/landing.png)
 
