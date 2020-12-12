@@ -1,1 +1,8 @@
-node_modules/
+node_modules
+package-lock.json
+.idea/.gitignore
+.idea/codeStyles/
+.idea/indecision-app.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml

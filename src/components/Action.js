@@ -5,7 +5,7 @@ const Action = (props) => (
         <button
             className="big-button"
             onClick={props.handlePick}
-            disabled={!props.hasOptions} //true if there are options, so flip it to disable
+            disabled={!props.hasOptions} //true if there are options, flip to disable
         >
             What should I do?
         </button>

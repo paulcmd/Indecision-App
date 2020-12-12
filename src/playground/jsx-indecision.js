@@ -52,7 +52,7 @@ const renderApp = () => {
 			<ol>
 				{app.options.map((option, index) => {
 					{
-						/* index creates unique numbers to use for the key*/
+						/* index creates unique numbers to id each option in the array */
 					}
 					return <li key={index}> {option} </li>;
 				})}
